@@ -1,0 +1,10 @@
+Facilitator:
+Jonas
+
+Agenda:
+1. Oblig 4 refleksjon
+2. Test-rolle
+3. Kundemøte 2. April
+4. Økning av arbeidsmengde
+5. Veien videre
+6. Merge ny kode inn i master-repo

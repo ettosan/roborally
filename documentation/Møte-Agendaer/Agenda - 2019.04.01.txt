@@ -1,0 +1,10 @@
+Facilitator:
+Jonas
+
+Agenda:
+1. Gjennomgang av ny kode
+2. Test-rolle
+3. Kundemøte 2. April
+4. Innlevering 4
+5. Økning av arbeidsmengde?
+6. Merge ny kode inn i master-repo

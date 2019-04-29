@@ -1,0 +1,10 @@
+Facilitator:
+Jonas
+
+Agenda:
+	1. Oppfølging av arbeid
+	2. Innlevering refleksjon
+	3. Bruk av Issues sammen med Project Board
+	4. Vurdering av fremgang så langt
+  	5. Avtale gruppetimer
+  	6. Pull Requests & Legge til nye to-dos på Project Board

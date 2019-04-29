@@ -1,0 +1,11 @@
+Facilitator:
+Jonas
+
+Agenda:
+	1. Oppfølging av arbeid
+	2. Kort om nye interfaces & Klasser
+	3. Innlevering 8. Mars
+	4. LibGDX
+	5. Prosjektmetodikk (Kanban & Scrum)
+	6. Diskusjon om verktøy(Intellij) og kjennskap til Java
+    7. Arbeidsfordeling

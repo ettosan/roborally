@@ -1,0 +1,9 @@
+Facilitator:
+Jonas
+
+Agenda:
+1. Fremgansrapport
+2. Test-coverage
+3. Siste møte
+4. Planer for denne og neste uke
+5. Merge ny kode inn i master-repo

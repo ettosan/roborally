@@ -1,0 +1,8 @@
+Facilitator:
+Jonas
+
+Agenda:
+1. Testing
+2. Påskeferie
+3. Mål denne uken
+4. Merge ny kode inn i master-repo

@@ -1,0 +1,16 @@
+Facilitator:
+Jonas
+
+Agenda:
+	1. Oppfølging av arbeid
+	2. Introduksjon til UML (Jonas)
+	3. Kort om LibGdx (Eirik)
+	4. Langsiktige planer fremover
+		a. Milestones
+		b. Plan for implementering av MVP
+		c. Bedre Klasse planer
+	5. Kort om Kaban (Nichola)
+	6. Diskusjon angående "kjennskap" til koden
+	7. Kort om de nye interfacene
+	8. Legge konkrete planer for spillekveld
+    9. Arbeidsfordeling
