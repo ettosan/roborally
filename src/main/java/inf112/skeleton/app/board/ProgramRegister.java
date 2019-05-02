@@ -20,7 +20,7 @@ public class ProgramRegister implements IProgramRegister {
     private int damage;
     private int flagCounter;
     private boolean isRobotDestroyed;
-
+    private boolean isPlayerHuman;
 
     /**
      * All of the variables and lists relating to cards
@@ -34,13 +34,28 @@ public class ProgramRegister implements IProgramRegister {
     private int maxAvailableCardAmount = GameRuleConstants.MAX_CARDS_IN_REGISTER.getValue();
     private int maxActiveCardAmount = GameRuleConstants.ACTIVE_CARDS_IN_REGISTER.getValue();
 
-    public ProgramRegister(IRobot robot){
+    public ProgramRegister(IRobot robot, boolean isPlayerHuman){
         this.robot = robot;
+        this.isPlayerHuman = isPlayerHuman;
         lives = maxLives;
         powerDowned = false;
         damage = 0;
         flagCounter = 0;
         isRobotDestroyed = false;
+    }
+
+    @Override
+    public boolean isPlayerHuman() {
+        return isPlayerHuman;
+    }
+
+    @Override
+    public void turnHumanPlayerIntoAI() {
+        if(!isPlayerHuman)
+            throw new IllegalArgumentException("The player is already an SimpleBraveAI!");
+        else
+            isPlayerHuman = false;
+
     }
 
     @Override

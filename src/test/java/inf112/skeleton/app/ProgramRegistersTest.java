@@ -20,7 +20,7 @@ public class ProgramRegistersTest {
     public void initialize(){
         int[] testCoordinates = {1,1};
         robot = new Robot(1,testCoordinates);
-        pR = new ProgramRegister(robot);
+        pR = new ProgramRegister(robot, true);
     }
 
     @Test

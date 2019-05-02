@@ -26,7 +26,7 @@ public class GFX extends ApplicationAdapter {
             menu.dispose();
             gameGFX.create(menu.getNumberOfRealPlayers(), menu.getNumbersOfAI(), menu.getTiledMap());
             createGFX = false;
-            }
+        }
         else {
             gameGFX.render();
             Gdx.input.setInputProcessor(gameGFX);

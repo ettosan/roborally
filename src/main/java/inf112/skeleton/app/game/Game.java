@@ -33,6 +33,7 @@ public class Game implements IGame {
     private IProgramRegister currentRegister;
     private Board board;
 
+    private IAI AI;
 
     private GameState gameState;
     private int phaseNumber = 0;
@@ -44,6 +45,7 @@ public class Game implements IGame {
         initialize();
         createDeck();
         shuffleDeck();
+        AI = new SimpleBraveAI();
         programRegistersFactory(numberOfPlayers);
         currentRegister = allProgramRegisters.get(0);
         boardWalls[0] = northWalls;
@@ -51,8 +53,15 @@ public class Game implements IGame {
         boardWalls[2] = southWalls;
         boardWalls[3] = westWalls;
 
-        int[] testPos = {8, 3}; //TODO: for tests, remove later
-        allProgramRegisters.get(0).getRobot().setPosition(testPos);
+        int[] testPos1 = {0, 1}; //TODO: for tests, remove later
+        allProgramRegisters.get(0).getRobot().setPosition(testPos1);
+        int[] testPos2 = {9, 11};
+        allProgramRegisters.get(1).getRobot().setPosition(testPos2);
+        allProgramRegisters.get(1).turnHumanPlayerIntoAI(); //TODO: should be done automatically
+    }
+
+    public ArrayList<IProgramRegister> getAllProgramRegisters() {
+        return allProgramRegisters;
     }
 
     public GameState getGameState() {
@@ -69,7 +78,7 @@ public class Game implements IGame {
             //TODO: get starting position from the board.
             int[] robotPos = {i + 5, 5};
             Robot robot = new Robot(i + 1, robotPos);
-            ProgramRegister programRegister = new ProgramRegister(robot);
+            ProgramRegister programRegister = new ProgramRegister(robot,true); //TODO: needs to dynamically assign SimpleBraveAI players
             allProgramRegisters.add(programRegister);
         }
     }
@@ -100,6 +109,11 @@ public class Game implements IGame {
         //get current position of robot
         int[] coordinates = robot.getPosition();
 
+        if(moveValue < 0) { //Makes backward movement work properly
+            dir = dir.next().next();
+            moveValue = Math.abs(moveValue);
+        }
+
         //Checks if the robot encounters a wall for each movement
         for(int i = 0; i < moveValue; i++) {
             if(!checkForWall(coordinates, dir)) {
@@ -109,6 +123,23 @@ public class Game implements IGame {
                 System.out.println("Robot in {"+coordinates[0]+","+coordinates[1]+"} hit a wall going "+dir);
         }
         robot.setPosition(coordinates);
+        if(checkIfOnHoleOrOutsideBoard(robot)) {
+            //getRegisterFromRobot(robot).destro(); TODO: make this work
+        }
+    }
+
+    /**
+     * Finds a programRegister based on the robot provided
+     * @param robot
+     * @return
+     */
+    private IProgramRegister getRegisterFromRobot(IRobot robot) {
+        for(IProgramRegister register : allProgramRegisters) {
+            if(robot.equals(register.getRobot()))
+                return register;
+        }
+
+        return null;
     }
 
     /**
@@ -119,7 +150,7 @@ public class Game implements IGame {
     @Override
     public void rotationMove(IRobot robot, ICardRotation card) {
         for (int i = 0; i < card.getRotationValue(); i++)
-            currentRegister.getRobot().rotate(card.getRotationDirection());
+            robot.rotate(card.getRotationDirection());
     }
 
     /**
@@ -187,7 +218,7 @@ public class Game implements IGame {
             for(ILaser currentLaser : laser) {
 
                 if (currentRegister.getRobot().getPosition()[0] == (currentLaser.getPosition())[0] &&
-                    currentRegister.getRobot().getPosition()[1] == (currentLaser.getPosition())[1] ) {
+                        currentRegister.getRobot().getPosition()[1] == (currentLaser.getPosition())[1] ) {
                     currentRegister.changeDamage(currentLaser.getDamage());
 
                     break;
@@ -252,7 +283,7 @@ public class Game implements IGame {
         }
     }
 
-        //TODO: make this
+    //TODO: make this
     private void initializeStartingPoints() {
     }
 
@@ -355,9 +386,6 @@ public class Game implements IGame {
             IProgramRegister currentHighestPriority = programRegistersToSort.get(highestPriorityIndex);
             doMoveAccordingToCardType(currentHighestPriority.getRobot(), currentHighestPriority.getActiveCardInPosition(phaseNumber));
 
-            if(checkIfOnHoleOrOutsideBoard(currentHighestPriority.getRobot()))
-
-
             programRegistersToSort.remove(currentHighestPriority);
         }
 
@@ -370,12 +398,12 @@ public class Game implements IGame {
     }
 
     //A collection method to simplify activation
-    private void activateBoardElements() {
-        activateConveyorBelts();
+    public void activateBoardElements() {
+        activateConveyorBelts(true);
+        activateConveyorBelts(false);
+        //activatePushers(); TODO: Make this method
         activateGears();
 
-        for(IProgramRegister register : allProgramRegisters)
-            checkIfOnHoleOrOutsideBoard(register.getRobot());
     }
 
     @Override
@@ -389,6 +417,11 @@ public class Game implements IGame {
                 dealCards();
                 progressGameState();
                 graphicsInterface.flipShowCard();
+
+                for(IProgramRegister register : allProgramRegisters) {
+                    if(!register.isPlayerHuman())
+                        AI.activateCards(register);
+                }
                 break;
             case CHOOSING_CARDS:
                 int playersNotReady = getNumberOfPlayersNotReady();
@@ -404,7 +437,12 @@ public class Game implements IGame {
                 if(playersNotReady == 1 && allProgramRegisters.size() != 1)
                     startTimer();
                 break;
-            case ANNOUNCING_POWER_DOWN: break;
+            case ANNOUNCING_POWER_DOWN:
+                for(IProgramRegister register : allProgramRegisters) {
+                    if(!register.isPlayerHuman())
+                        AI.decideIfPowerDown(register);
+                }
+                break;
             case EXECUTING_PHASES:
                 if(phaseNumber == (GameRuleConstants.NUMBER_OF_PHASES_IN_ROUND.getValue())) {
                     phaseNumber = 0;
@@ -413,17 +451,16 @@ public class Game implements IGame {
                     doPhase(phaseNumber++);
                 break;
             case END_OF_ROUND_CLEANUP:
-                    doRepairs();
-                    for(IProgramRegister register:allProgramRegisters) {
-                        register.powerOn();
-                        if (register.isDestroyed())
-                            restoreRobot(register);
-                    }
-                    progressGameState();
+                doRepairs();
+                for(IProgramRegister register:allProgramRegisters) {
+                    register.powerOn();
+                    if (register.isDestroyed())
+                        restoreRobot(register);
+                }
+                progressGameState();
                 break;
         }
     }
-
 
     public void powerDownRobot(IProgramRegister register, boolean powerDown) {
         if(powerDown)register.powerDown();
@@ -436,8 +473,9 @@ public class Game implements IGame {
     private int getNumberOfPlayersNotReady() {
         int notReadyCounter = 0;
         for(IProgramRegister register : allProgramRegisters) {
-            if (!register.isCardSlotsFilled())
+            if (!register.isCardSlotsFilled()) {
                 notReadyCounter++;
+            }
         }
         return notReadyCounter;
     }
@@ -602,18 +640,18 @@ public class Game implements IGame {
 
     @Override
     public void activateFlag() {
-            for (IProgramRegister register : allProgramRegisters) {
-                if(checkIfOnFlag(register.getRobot())) {
-                    for (IFlag flag : boardFlags) {
-                        if (register.getFlagCounter() == flag.getFlagId()) { //checks if the robot hits flags in right order.
-                            System.out.println();
-                            register.increaseFlagCounter(); //updates the robot programming card.
-                            updateBackUp(register.getRobot()); //places a new backup
-                            break;
-                        }
+        for (IProgramRegister register : allProgramRegisters) {
+            if(checkIfOnFlag(register.getRobot())) {
+                for (IFlag flag : boardFlags) {
+                    if (register.getFlagCounter() == flag.getFlagId()) { //checks if the robot hits flags in right order.
+                        System.out.println();
+                        register.increaseFlagCounter(); //updates the robot programming card.
+                        updateBackUp(register.getRobot()); //places a new backup
+                        break;
                     }
                 }
             }
+        }
     }
 
     public IProgramRegister checkIfContainsRobot(int[] coordinate) {
@@ -626,7 +664,7 @@ public class Game implements IGame {
     }
 
     @Override
-    public void activateConveyorBelts() {
+    public void activateConveyorBelts(boolean activateOnlyExpressConveyors) {
         int numberOfRobots = allProgramRegisters.size();
 
         boolean[] isMoved = new boolean[numberOfRobots]; //Tracks if a robot will be moved by a conveyor
@@ -643,16 +681,18 @@ public class Game implements IGame {
             int[] robotPos = allProgramRegisters.get(i).getRobot().getPosition();
             predictedPositions[i] = robotPos.clone();
             for(IConveyorBelt conveyorBelt : conveyorBelts) {
-                //Goes through all of the conveyor belts and calculates the predicted position & stores relevant conveyors
-                if(Arrays.equals(robotPos, conveyorBelt.getPosition())){
-                    predictedPositions[i][0] = robotPos[0] + conveyorBelt.getDirection().getDeltaX();
-                    predictedPositions[i][1] = robotPos[1] + conveyorBelt.getDirection().getDeltaY();
+                if((conveyorBelt.isExpressType() == activateOnlyExpressConveyors) || !activateOnlyExpressConveyors) {
+                    //Goes through all of the conveyor belts and calculates the predicted position & stores relevant conveyors
+                    if (Arrays.equals(robotPos, conveyorBelt.getPosition())) {
+                        predictedPositions[i][0] = robotPos[0] + conveyorBelt.getDirection().getDeltaX();
+                        predictedPositions[i][1] = robotPos[1] + conveyorBelt.getDirection().getDeltaY();
 
-                    conveyorsWithRobot[i][0] = conveyorBelt;
-                    conveyorsWithRobot[i][1] = getConveyorInPosition(predictedPositions[i]);
+                        conveyorsWithRobot[i][0] = conveyorBelt;
+                        conveyorsWithRobot[i][1] = getConveyorInPosition(predictedPositions[i]);
 
-                    isMoved[i] = true;
-                    break; //Breaks to avoid running through the rest of the conveyor list
+                        isMoved[i] = true;
+                        break; //Breaks to avoid running through the rest of the conveyor list
+                    }
                 }
             }
         }
@@ -750,5 +790,6 @@ public class Game implements IGame {
 
 
 }
+
 
 

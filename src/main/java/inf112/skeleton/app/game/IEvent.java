@@ -8,7 +8,7 @@ public interface IEvent {
     /**
      * moves a robot
      */
-    void moveRobot();
+    void moveRobot ();
     /**
      * fire a laser from board
      */
@@ -24,19 +24,19 @@ public interface IEvent {
     /**
      * conveyor belts
      */
-    void conveyorBelt();
+    void conveyorBelt ();
     /**
      * moves a robot
      */
-    void dealProgramCards();
+    void dealProgramCards ();
     /**
      * moves a robot
      */
-    boolean powerDownCheck();
+    boolean powerDownCheck ();
     /**
      * moves a robot
      */
-    void revealProgramCards();
+    void revealProgramCards ();
     /**
      * moves a robot
      */
@@ -44,11 +44,11 @@ public interface IEvent {
     /**
      * moves a robot
      */
-    void activateGears();
+    void activateGears ();
     /**
      * moves a robot
      */
-    void rotateRobot();
+    void rotateRobot ();
     /**
      * moves a robot
      */
@@ -56,7 +56,7 @@ public interface IEvent {
     /**
      * moves a robot
      */
-    void removeProgramCards();
+    void removeProgramCards ();
 
     /**
      * Checks if a robot is destroyed
@@ -66,5 +66,5 @@ public interface IEvent {
     /**
      * Checks if the robot has won
      */
-    void winCheck();
+    void winCheck ();
 }

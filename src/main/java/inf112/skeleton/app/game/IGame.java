@@ -121,9 +121,10 @@ public interface IGame {
 	void removeCard(boolean[] cards);
 
 	/**
-	 * Activate Coveyorbelts
+	 * Activate Coveyorbelts, can chose whether to activate all belts or only express
+	 * @param activateOnlyExpressConveyorBelts true if you only want to activate express conveyors
 	 */
-	void activateConveyorBelts();
+	void activateConveyorBelts(boolean activateOnlyExpressConveyorBelts);
 
 	/**
 	 * Adds a card to the deck
@@ -150,12 +151,12 @@ public interface IGame {
 	 */
 	boolean checkForWall(int[] position, Direction dir);
 
-    /**
-     * Checks if robot is on a flag-tile
-     * @param robot The robot to check
-     * @return true if it is on a flag, false otherwise
-     */
-    boolean checkIfOnFlag(IRobot robot);
+	/**
+	 * Checks if robot is on a flag-tile
+	 * @param robot The robot to check
+	 * @return true if it is on a flag, false otherwise
+	 */
+	boolean checkIfOnFlag(IRobot robot);
 
 	/**
 	 * Activate lasers
@@ -169,20 +170,20 @@ public interface IGame {
 	 */
 	void activateRobotLasers();
 
-    /**
-     * Iterates through the registers and performs any repairs on robots on repairSites
-     * @return true if it is on a repairSite, false otherwise
-     */
-    void doRepairs();
+	/**
+	 * Iterates through the registers and performs any repairs on robots on repairSites
+	 * @return true if it is on a repairSite, false otherwise
+	 */
+	void doRepairs();
 
-    /**
-     * Checks if a robot has won the game
-     * @return true if robot has won, false otherwise
-     */
-    boolean winCheck();
+	/**
+	 * Checks if a robot has won the game
+	 * @return true if robot has won, false otherwise
+	 */
+	boolean winCheck();
 
-    /**
-     * Ends the game if robot has won
-     */
-    void gameOver();
+	/**
+	 * Ends the game if robot has won
+	 */
+	void gameOver();
 }

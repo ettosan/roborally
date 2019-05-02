@@ -6,10 +6,10 @@ package inf112.skeleton.app.board;
  * North, west, south, east
  */
 public enum Direction {
-    NORTH ("N", 0, 0, 1),
-    EAST ("E", 1, 1, 0),
-    SOUTH ("S", 2, 0, -1),
-    WEST ("W", 3, -1, 0);
+    NORTH("N", 0, 0, 1),
+    EAST("E", 1, 1, 0),
+    SOUTH("S", 2, 0, -1),
+    WEST("W", 3, -1, 0);
 
     private final String symbol;
     private final int directionValue;
@@ -27,6 +27,7 @@ public enum Direction {
 
     /**
      * Returns the shorter symbol associated with the direction
+     *
      * @return symbol
      */
     public String getSymbol() {
@@ -34,7 +35,7 @@ public enum Direction {
     }
 
     public int getDirectionValue() {
-        return  directionValue;
+        return directionValue;
     }
 
     public int getDirectionInDegrees() {
@@ -56,7 +57,7 @@ public enum Direction {
      * @return previous direction
      */
     public Direction previous() {
-        if(ordinal() == 0)
+        if (ordinal() == 0)
             return vals[vals.length - 1];
         else
             return vals[(ordinal() - 1) % vals.length];
