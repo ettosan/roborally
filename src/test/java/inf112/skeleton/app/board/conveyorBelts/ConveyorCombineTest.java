@@ -19,11 +19,6 @@ public class ConveyorCombineTest {
         testConveyorCombine = new ConveyorCombine(dir, moveValue, position);
     }
 
-    @Test
-    public void DirectionTest() {
-        assertEquals(dir,testConveyorCombine.getDirection());
-    }
-    @Test
     public void positionTest(){
         assertEquals(position,testConveyorCombine.getPosition());
     }

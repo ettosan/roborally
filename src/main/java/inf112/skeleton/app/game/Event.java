@@ -9,7 +9,7 @@ import java.util.List;
  */
 public enum Event {
 
-
+    
     MOVE_ROBOT,
     FIRE_LASER_ROBOT,
     FIRE_LASER_BOARD,

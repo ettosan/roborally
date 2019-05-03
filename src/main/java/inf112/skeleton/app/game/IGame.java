@@ -19,6 +19,7 @@ public interface IGame {
 
 	/**
 	 * Retrieves the board from IBoard
+	 *
 	 * @return board from IBoard
 	 */
 	IBoard getBoard();
@@ -26,6 +27,7 @@ public interface IGame {
 
 	/**
 	 * Absolute movement of the robot in the current register
+	 *
 	 * @param coordinate the new coordinate
 	 */
 	void absoluteMove(IRobot robot, int[] coordinate);
@@ -33,14 +35,16 @@ public interface IGame {
 
 	/**
 	 * Relative movement (robot)
+	 *
 	 * @param robot to be moved
-	 * @param card the movement card
+	 * @param card  the movement card
 	 */
 	void relativeMove(IRobot robot, ICardMovement card);
 
 
 	/**
 	 * Checks if tile contains a robot and returns the robot
+	 *
 	 * @param coordinate x-ccordinate on index 0,
 	 *                   y-ccordinate on index 1 on board
 	 * @return IRobot robot
@@ -49,15 +53,16 @@ public interface IGame {
 
 	/**
 	 * Turns the current Robot
+	 *
 	 * @param robot the robot to be rotated
-	 * @param card the rotation card
+	 * @param card  the rotation card
 	 */
 	void rotationMove(IRobot robot, ICardRotation card);
 
 	/**
 	 * execute a phase
 	 */
-	void doPhase(int phaseNumber);
+	void progressPhase();
 
 
 	/**
@@ -80,12 +85,14 @@ public interface IGame {
 
 	/**
 	 * repair the robot
+	 *
 	 * @param programRegister to be repaired
 	 */
 	void repair(IProgramRegister programRegister);
 
 	/**
 	 * updates the backup of the robot
+	 *
 	 * @param robot to update the backup of
 	 */
 	void updateBackUp(IRobot robot);
@@ -102,26 +109,19 @@ public interface IGame {
 	 * then checks if the robot hits flags in right order.
 	 * If so, updates the robot programming card.
 	 * Finally, it always places a new backup.
-	 *
 	 */
 	void activateFlag();
 
 	/**
-	 * restores the destroyed robot and places it back on the board in the
-	 * backup location
-	 * @param programRegister
-	 */
-	void restoreRobot(IProgramRegister programRegister);
-
-
-	/**
 	 * removes the card
+	 *
 	 * @param cards
 	 */
 	void removeCard(boolean[] cards);
 
 	/**
 	 * Activate Coveyorbelts, can chose whether to activate all belts or only express
+	 *
 	 * @param activateOnlyExpressConveyorBelts true if you only want to activate express conveyors
 	 */
 	void activateConveyorBelts(boolean activateOnlyExpressConveyorBelts);
@@ -137,7 +137,7 @@ public interface IGame {
 	 * Checks if it's possible to go from one space to the other
 	 * Has to be adjacent, if not, an exception will be thrown
 	 *
-	 * @param startCoordinates the start of the movement
+	 * @param startCoordinates       the start of the movement
 	 * @param destinationCoordinates the end of the movement
 	 * @return true if possible, false if not
 	 */
@@ -145,14 +145,16 @@ public interface IGame {
 
 	/**
 	 * Checks if there is a wall in the given direction for the given position.
+	 *
 	 * @param position Position to check
-	 * @param dir Direction to check
+	 * @param dir      Direction to check
 	 * @return true if there is a wall, false if there is not.
 	 */
 	boolean checkForWall(int[] position, Direction dir);
 
 	/**
 	 * Checks if robot is on a flag-tile
+	 *
 	 * @param robot The robot to check
 	 * @return true if it is on a flag, false otherwise
 	 */
@@ -172,18 +174,33 @@ public interface IGame {
 
 	/**
 	 * Iterates through the registers and performs any repairs on robots on repairSites
+	 *
 	 * @return true if it is on a repairSite, false otherwise
 	 */
 	void doRepairs();
 
+
+    /**
+     * Ends the game if robot has won
+     */
+
+    boolean gameOver();
+
 	/**
 	 * Checks if a robot has won the game
+	 *
 	 * @return true if robot has won, false otherwise
 	 */
 	boolean winCheck();
 
+
 	/**
-	 * Ends the game if robot has won
+	 * Checks if the game has any human players in it
+	 *
+	 * @return true if human players > 0, false if it's == 0
 	 */
-	void gameOver();
+	boolean checkIfGameHasHumanPlayers();
+
 }
+
+

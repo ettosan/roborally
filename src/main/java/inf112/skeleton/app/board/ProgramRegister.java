@@ -45,6 +45,11 @@ public class ProgramRegister implements IProgramRegister {
     }
 
     @Override
+    public boolean[] getIsCardFlipped() {
+        return isCardFlipped;
+    }
+
+    @Override
     public boolean isPlayerHuman() {
         return isPlayerHuman;
     }
@@ -52,7 +57,7 @@ public class ProgramRegister implements IProgramRegister {
     @Override
     public void turnHumanPlayerIntoAI() {
         if(!isPlayerHuman)
-            throw new IllegalArgumentException("The player is already an SimpleBraveAI!");
+            throw new IllegalArgumentException("The player is already an AI!");
         else
             isPlayerHuman = false;
 
@@ -78,18 +83,26 @@ public class ProgramRegister implements IProgramRegister {
         return robot;
     }
 
+    public void setLives (int live) {
+        lives=live;
+    }
+
     @Override
     public void destroyRobot() {
+        int[] backUpLocation = robot.getBackup(); //TODO: should check if there is already a robot there, and handle that
+        robot.setPosition(backUpLocation); //Does the move here to avoid weird animations
         isRobotDestroyed = true;
     }
 
     @Override
     public boolean isDestroyed() {
-        return isRobotDestroyed;
+        return isRobotDestroyed || isDead(); //If the robot is dead it's also destroyed
     }
 
     @Override
-    public void restoreRobot() {
+    public void restoreRobot(IGame game) {
+        removeLife();
+        setDamage(2);
         isRobotDestroyed = false;
     }
 
@@ -181,6 +194,10 @@ public class ProgramRegister implements IProgramRegister {
                 activeCards[i] = null;
             }
         }
+
+        for(int i = 0; i < isCardFlipped.length; i++) {
+            isCardFlipped[i] = false;
+        }
     }
 
     @Override
@@ -196,6 +213,11 @@ public class ProgramRegister implements IProgramRegister {
     @Override
     public void turnACard(int numCard) {
         isCardFlipped[numCard] = !isCardFlipped[numCard];
+    }
+
+    @Override
+    public boolean isCardFlipped (int numCard) {
+        return isCardFlipped[numCard];
     }
 
     @Override

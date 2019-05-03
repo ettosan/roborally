@@ -8,11 +8,13 @@ public class GFX extends ApplicationAdapter {
     private boolean createGFX;
     private Menu menu;
     private GameGFX gameGFX;
+    private EndGFX end;
 
     public void create() {
         createGFX = true;
         menu = new Menu();
         gameGFX = new GameGFX();
+        end = new EndGFX();
         Gdx.input.setInputProcessor(menu);
 
     }
@@ -26,6 +28,10 @@ public class GFX extends ApplicationAdapter {
             menu.dispose();
             gameGFX.create(menu.getNumberOfRealPlayers(), menu.getNumbersOfAI(), menu.getTiledMap());
             createGFX = false;
+            }
+        else if(gameGFX.gameOver()){
+            gameGFX.dispose();
+            end.render();
         }
         else {
             gameGFX.render();

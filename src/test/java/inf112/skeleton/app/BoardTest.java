@@ -2,53 +2,53 @@ package inf112.skeleton.app;
 
 import static org.junit.Assert.assertEquals;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.skeleton.app.board.Board;
 import inf112.skeleton.app.board.IBoard;
+import inf112.skeleton.app.board.ILaser;
+import inf112.skeleton.app.board.Laser;
 import inf112.skeleton.app.graphics.GFX;
+import inf112.skeleton.app.graphics.Menu;
+import org.junit.Before;
 import org.junit.Test;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+
+import java.io.File;
+import java.util.ArrayList;
 
 public class BoardTest {
 
 
-	private TiledMap map = new TmxMapLoader().load("assets/risky_exchange.tmx");
-	private TiledMapRenderer tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
-	public void fixNullPointerException () {
+
+	@Test
+	public void widthTest (){
+
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Board";
 		cfg.width = 1520;
 		cfg.height = 960;
 
-		new LwjglApplication(new GFX(), cfg).exit();
-	}
-	
-	@Test
-	public void testCheckSquare () {
 
-		fixNullPointerException();
+		LwjglApplication helper = new LwjglApplication(new GFX(),cfg);
 
-		IBoard board = new Board(map);
+		TiledMap map = new TmxMapLoader().load("assets/map/test/testMap.tmx");
 
-		int xCoordinate = 0;
-		int yCoordinate = 0;
-
-
-	}
-
-	@Test
-	public void widthTest (){
-
-		fixNullPointerException();
+		helper.exit();
 
 		IBoard board = new Board(map);
 
-		int width=60;
+		int width=100;
 
 		int widthFromMethod = board.getWidth();
 
@@ -58,31 +58,52 @@ public class BoardTest {
 	@Test
 	public void heightTest (){
 
-		fixNullPointerException();
+		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+		cfg.title = "Board";
+		cfg.width = 1520;
+		cfg.height = 960;
+
+
+		LwjglApplication helper = new LwjglApplication(new GFX(),cfg);
+
+		TiledMap map = new TmxMapLoader().load("assets/map/test/testMap.tmx");
+
+		helper.exit();
 
 		IBoard board = new Board(map);
 
-		int height = 30;
+		int height = 80;
 
 		int heightFromMethod = board.getHeight();
+
+		assertEquals(heightFromMethod,height);
 
 	}
 
 	@Test
 	public void testGetMap () {
 
-		fixNullPointerException();
+
+		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+		cfg.title = "Board";
+		cfg.width = 1520;
+		cfg.height = 960;
+
+
+		LwjglApplication helper = new LwjglApplication(new GFX(),cfg);
+
+		TiledMap map = new TmxMapLoader().load("assets/map/test/testMap.tmx");
+
+		helper.exit();
 
 		IBoard board = new Board(map);
 
-		TiledMap mapFromMethod = board.getMap();
 
-		assertEquals(map,mapFromMethod);
+		assertEquals(board.getMap(),map);
+
 
 	}
 
-
-	
 }
 
 	

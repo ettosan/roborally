@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+
 <tileset version="1.2" tiledversion="1.2.3" name="drawingtest" tilewidth="80" tileheight="80" tilecount="108" columns="9">
  <image source="tileset.png" width="720" height="964"/>
  <tile id="0">
@@ -27,7 +29,7 @@
  </tile>
  <tile id="3">
   <properties>
-   <property name="rotationDirection" type="bool" value="true"/>
+   <property name="rotationDirection" type="bool" value="false"/>
    <property name="type" value="gear"/>
   </properties>
  </tile>
@@ -89,7 +91,7 @@
  </tile>
  <tile id="12">
   <properties>
-   <property name="rotationDirection" type="bool" value="false"/>
+   <property name="rotationDirection" type="bool" value="true"/>
    <property name="type" value="gear"/>
   </properties>
  </tile>

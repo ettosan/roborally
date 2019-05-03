@@ -11,6 +11,12 @@ import inf112.skeleton.app.robot.IRobot;
  */
 public interface IProgramRegister {
     /**
+     * Returns a boolean array representing which cards are "flipped"
+     * @return boolean[] of flipped cards
+     */
+    boolean[] getIsCardFlipped();
+
+    /**
      * Returns whether the associated player should be human or an SimpleBraveAI
      * @return true for human, false for SimpleBraveAI
      */
@@ -62,7 +68,7 @@ public interface IProgramRegister {
     /**
      * reset isRobotDestroyed value
      */
-    void restoreRobot();
+    void restoreRobot(IGame game);
 
     /**
      * power down a robot
@@ -72,7 +78,7 @@ public interface IProgramRegister {
     /**
      * checks if a robot is powered down
      *
-     * @return
+     * @return true if powerd down, false if not
      */
     boolean isPoweredDown();
 
@@ -177,4 +183,11 @@ public interface IProgramRegister {
      * @return card in position
      */
     ICard getActiveCardInPosition(int position);
+
+    /**
+     * Checks if card was flipped
+     * @param numCard
+     * @return
+     */
+    boolean isCardFlipped (int numCard);
 }

@@ -20,7 +20,7 @@ public interface IMovementBoardElement {
      * Return the direction conveyor belt
      * @return
      */
-    Direction getDirection();
+    Direction getDirection ();
 
     /**
      *Returns movement value

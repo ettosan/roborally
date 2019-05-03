@@ -10,7 +10,7 @@ public interface ICardRotation extends ICard{
      * gets the rotation direction
      * @return true if right and false if left (can replace true/false with 0 and 1)
      */
-    boolean getRotationDirection();
+    boolean getRotationDirection ();
 
 
     /**

@@ -5,7 +5,8 @@ public enum GameRuleConstants {
     MAX_DAMAGE(9),
     MAX_CARDS_IN_REGISTER(9),
     ACTIVE_CARDS_IN_REGISTER(5),
-    NUMBER_OF_PHASES_IN_ROUND(5);
+    NUMBER_OF_PHASES_IN_ROUND(5),
+    NUMBER_OF_STARTING_POINTS(8);
 
     GameRuleConstants (int value){
         this.value=value;

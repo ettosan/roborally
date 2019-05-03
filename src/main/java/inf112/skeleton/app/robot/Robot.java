@@ -23,10 +23,10 @@ public class Robot implements IRobot{
      * @param coordinate the coordinates the robot is on
      */
     public Robot(int id, int[] coordinate) {
-        dir = Direction.SOUTH;
+        dir = Direction.NORTH; //Is set to north since all of our maps have the start points south & a robot should start facing the main board
         this.id = id;
         this.coordinate = coordinate;
-        int[] backup = coordinate;
+        backup = coordinate;
     }
 
     @Override

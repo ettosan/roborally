@@ -13,7 +13,7 @@ public interface ICardMovement extends ICard{
      * Gets move value, if negative = backup move
      * @return amount of robots movement
      */
-    int getMoveValue();
+    int getMoveValue ();
 
 
 }

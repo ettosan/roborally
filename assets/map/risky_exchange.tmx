@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="12" height="16" tilewidth="80" tileheight="80" infinite="0" nextlayerid="7" nextobjectid="1">
+ <tileset firstgid="1" source="properties/tileProperties.tsx"/>
+ <layer id="1" name="boardElements" width="12" height="16">
+  <data encoding="base64" compression="zlib">
+   eJyNkLsOgCAMRfERB1+TsqmTcfMzdNRRR/3/jxCTmtzclMhwUmgPUFoaY6wQSYxpjbVCYqL4PfgVuCH3f+RA6vFr4M1NdAf6TKHwV8uJz68VtDcz6aeV/eB5MyXfSk7rFeeJPs8zCfQr+hv7lvy3Vjouz581bolHgHvS7BvHpni7Y1TmM8PZxbGC04H3ADTrDdU=
+  </data>
+ </layer>
+ <layer id="6" name="lasers" width="12" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBh4IISER8EooCcAAIhQADc=
+  </data>
+ </layer>
+ <layer id="2" name="wallsWEST" width="12" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAt0KGSGnL0UmIuuYDW7hkIP5ECiI1vSv1Bqn5c6gHMvgIR
+  </data>
+ </layer>
+ <layer id="3" name="wallsSOUTH" width="12" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBheQBAHeyQDcsJBEI3GJTbUAQCZWAB4
+  </data>
+ </layer>
+ <layer id="4" name="wallsEAST" width="12" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg8QJnGZlDDfFLBQLpnIPxLDfuVKdBLKgAAt3cBPA==
+  </data>
+ </layer>
+ <layer id="5" name="wallsNORTH" width="12" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYIAADjQal9goIA1gC09620tP+4Za+gEAmGAAWQ==
+  </data>
+ </layer>
+</map>
